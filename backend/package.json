@@ -1,8 +1,12 @@
 {
-  "name": "backend",
+  "name": "auto-blog-backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
+    "dev": "ts-node src/index.ts",
+    "start": "node dist/index.ts",
+    "build": "tsc",
+    "migrate": "",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -11,6 +15,17 @@
   "type": "commonjs",
   "description": "",
   "dependencies": {
-    "express": "^5.2.1"
+    "axios": "^1.13.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "knex": "^3.1.0",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.10.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   }
 }

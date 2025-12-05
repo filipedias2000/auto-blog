@@ -1,0 +1,51 @@
+name: autoblog
+
+# services is atop-level element as a map whose keys are string representations of service names
+services:
+
+# container
+  postgres:
+    image: postgres:16 # image specifies the image to start the container from
+    container_name: auto-blog-postgres
+    ports:
+      - "5432:5432" # host port: container port
+    environment: # The environment attribute defines environment variables set in the container.
+      POSTGRES_USER: autoblog
+      POSTGRES_PASSWORD: autoblog
+      POSTGRES_DB: autoblog
+    volumes: # The top-level volumes declaration lets you configure named volumes that can be reused across multiple services.
+      - auto_blog_pgdata:/var/lib/postgresql/data
+    restart: always # The policy always restarts the container until its removal
+
+# container
+  backend:
+    build: # build section defines how to create the Docker image for the service.
+      context: ../backend # context defines a path to a directory containing a Dockerfile
+    container_name: auto-blog-backend
+    ports:
+      - "4000:4000"
+    env_file: # The env_file attribute is used to specify one or more files that contain environment variables to be passed to the containers.
+      - ../backend/.env 
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: autoblog
+      DB_PASSWORD: autoblog
+      DB_NAME: autoblog
+    depends_on:
+      - postgres
+    restart: always
+
+# container
+  frontend:
+    build:
+      context: ../frontend
+    container_name: auto-blog-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: always
+
+volumes:
+  auto_blog_pgdata:
