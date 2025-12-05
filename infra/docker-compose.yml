@@ -12,7 +12,7 @@ services:
     environment: # The environment attribute defines environment variables set in the container.
       POSTGRES_USER: autoblog
       POSTGRES_PASSWORD: autoblog
-      POSTGRES_DB: autoblog
+      POSTGRES_DB: autoblogDb
     volumes: # The top-level volumes declaration lets you configure named volumes that can be reused across multiple services.
       - auto_blog_pgdata:/var/lib/postgresql/data
     restart: always # The policy always restarts the container until its removal
@@ -31,7 +31,7 @@ services:
       DB_PORT: 5432
       DB_USER: autoblog
       DB_PASSWORD: autoblog
-      DB_NAME: autoblog
+      DB_NAME: autoblogDb
     depends_on:
       - postgres
     restart: always
