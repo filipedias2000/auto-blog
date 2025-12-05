@@ -1,24 +1,18 @@
-# FROM	Create a new build stage from a base image.
+# Use Node.js LTS slim image
 FROM node:20-bullseye-slim
 
-# WORKDIR	Change working directory.
+# Set working directory
 WORKDIR /app
 
-# COPY	Copy files and directories.
+# Copy package files and install dependencies
 COPY package*.json ./
+RUN npm install --production
 
-# RUN	Execute build commands.
-RUN npm install
-
+# Copy all source files
 COPY . .
 
-# ✅ Build TypeScript
-RUN npm run build
-
-# EXPOSE	Describe which ports your application is listening on.
+# Expose backend port
 EXPOSE 4000
 
-# CMD	Specify default commands.
-CMD ["npm", "run", "start"]
-
-# Will need the environment variables for the database
+# Start Node using compiled JS
+CMD ["node", "src/index.js"]
