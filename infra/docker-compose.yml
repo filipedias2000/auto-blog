@@ -11,7 +11,7 @@ services:
       - "5432:5432" # host port: container port
     environment: # The environment attribute defines environment variables set in the container.
       POSTGRES_USER: autoblog
-      POSTGRES_PASSWORD: autoblog
+      POSTGRES_PASSWORD: 12345678
       POSTGRES_DB: autoblogDb
     volumes: # The top-level volumes declaration lets you configure named volumes that can be reused across multiple services.
       - auto_blog_pgdata:/var/lib/postgresql/data
@@ -30,7 +30,7 @@ services:
       DB_HOST: postgres
       DB_PORT: 5432
       DB_USER: autoblog
-      DB_PASSWORD: autoblog
+      DB_PASSWORD: 12345678
       DB_NAME: autoblogDb
     depends_on:
       - postgres

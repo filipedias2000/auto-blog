@@ -7,22 +7,30 @@ generator client {
 }
 
 model User {
+  // id -> primary key column 
+  // @id -> marks it as the primary key
+  // @default(uuid()) → automatically generates a UUID for new records
   id    String @id @default(uuid())
+  //  email column, must be unique (no two users can have the same email)
   email String @unique
   posts Post[]
 }
 
 model Post {
-  id       String @id @default(uuid())
-  title    String
-  content  String
-  author   User   @relation(fields: [authorId], references: [id])
-  authorId String
+  id                String             @id @default(uuid())
+  title             String
+  content           String
+  // fields: [authorId] → the column in this table that stores the foreign key
+  author            User               @relation(fields: [authorId], references: [id])
+  // authorId String → the actual column storing the User’s id
+  authorId          String
+  generatedContents GeneratedContent[]
 }
 
 model GeneratedContent {
   id      String @id @default(uuid())
   postId  String
   content String
-  post    Post @relation(fields: [postId], references: [id])
+  // post Post @relation(fields: [postId], references: [id]) → establishes many-to-one relation: each GeneratedContent belongs to one Post.
+  post    Post   @relation(fields: [postId], references: [id])
 }
